@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero Automático</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <h1 class="mb-4">Cajero Orantes</h1>
+                <img src="museo.png" alt="Cajero automático" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre del usuario:</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad a retirar (en dólares):</label>
+                    <input type="number" class="form-control" id="cantidad" placeholder="Ingrese la cantidad">
+                </div>
+                <button class="btn btn-primary" onclick="calcularBilletes()">Calcular</button>
+                <div class="mt-3" id="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        function calcularBilletes() {
+            const nombre = document.getElementById('nombre').value;
+            const cantidad = parseInt(document.getElementById('cantidad').value);
+
+            if (isNaN(cantidad) || cantidad <= 0) {
+                alert('Por favor, ingrese una cantidad válida.');
+                return;
+            }
+
+            const billetes100 = Math.floor(cantidad / 100);
+            const billetes50 = Math.floor((cantidad % 100) / 50);
+            const billetes20 = Math.floor(((cantidad % 100) % 50) / 20);
+            const billetes10 = Math.floor((((cantidad % 100) % 50) % 20) / 10);
+            const billetes5 = Math.floor(((((cantidad % 100) % 50) % 20) % 10) / 5);
+            const billetes1 = (((cantidad % 100) % 50) % 20) % 10;
+
+            const resultado = `
+                <h2>Retiro de ${nombre}</h2>
+                <p>Cantidad solicitada: ${cantidad} $</p>
+                <p>Billetes de 100: ${billetes100}</p>
+                <p>Billetes de 50: ${billetes50}</p>
+                <p>Billetes de 20: ${billetes20}</p>
+                <p>Billetes de 10: ${billetes10}</p>
+                <p>Billetes de 5: ${billetes5}</p>
+                <p>Billetes de 1: ${billetes1}</p>
+            `;
+
+            document.getElementById('resultado').innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
+
